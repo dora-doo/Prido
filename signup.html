@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="auth-page" style="background-image: url('https://source.unsplash.com/1600x900/?signup');">
+  <div class="auth-container">
+    <h2>Sign Up</h2>
+    <form onsubmit="signUpUser(event)">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" required />
+
+      <button type="submit">Register</button>
+      <p><a href="login.html">Already have an account?</a></p>
+    </form>
+    <p id="signupMsg"></p>
+  </div>
+
+  <script>
+    function signUpUser(event) {
+      event.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const msg = document.getElementById("signupMsg");
+
+      if (localStorage.getItem(email)) {
+        msg.innerText = "Account already exists.";
+        msg.style.color = "red";
+        return;
+      }
+
+      localStorage.setItem(email, JSON.stringify({ name, password }));
+      msg.innerText = "Account created! Redirecting to login...";
+      msg.style.color = "green";
+      setTimeout(() => window.location.href = "login.html", 2000);
+    }
+  </script>
+</body>
+</html>
